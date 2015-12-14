@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DolphinDbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="division">
+          <Key>
+            <PropertyRef Name="ID_DIVISION" />
+          </Key>
+          <Property Name="ID_DIVISION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOM_DIVISION" Type="varchar" MaxLength="30" />
+          <Property Name="LIBELLE_DIVISION" Type="varchar" MaxLength="7" />
+        </EntityType>
+        <EntityType Name="dolphinmatch">
+          <Key>
+            <PropertyRef Name="ID_MATCH" />
+          </Key>
+          <Property Name="ID_MATCH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DATE_MATCH" Type="date" Nullable="false" />
+          <Property Name="SECOND_MATCH" Type="bool" Nullable="false" />
+          <Property Name="DISTANCE" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="COUT" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="ID_PISCINE" Type="int" Nullable="false" />
+          <Property Name="ID_DIVISION" Type="int" Nullable="false" />
+          <Property Name="ID_UTILISATEUR" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="piscine">
+          <Key>
+            <PropertyRef Name="ID_PISCINE" />
+          </Key>
+          <Property Name="ID_PISCINE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOM_PISCINE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ADR_LATITUDE" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+          <Property Name="ADR_LONGITUDE" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="ID_UTILISATEUR" />
+          </Key>
+          <Property Name="ID_UTILISATEUR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LOGIN" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NOM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PRENOM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MOTDEPASSE" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ADR_LATITUDE" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+          <Property Name="ADR_LONGITUDE" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DOLPHINMATCH_ID_DIVISION">
+          <End Role="division" Type="Self.division" Multiplicity="1" />
+          <End Role="dolphinmatch" Type="Self.dolphinmatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="division">
+              <PropertyRef Name="ID_DIVISION" />
+            </Principal>
+            <Dependent Role="dolphinmatch">
+              <PropertyRef Name="ID_DIVISION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOLPHINMATCH_ID_PISCINE">
+          <End Role="piscine" Type="Self.piscine" Multiplicity="1" />
+          <End Role="dolphinmatch" Type="Self.dolphinmatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="piscine">
+              <PropertyRef Name="ID_PISCINE" />
+            </Principal>
+            <Dependent Role="dolphinmatch">
+              <PropertyRef Name="ID_PISCINE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOLPHINMATCH_ID_UTILISATEUR">
+          <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="1" />
+          <End Role="dolphinmatch" Type="Self.dolphinmatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilisateur">
+              <PropertyRef Name="ID_UTILISATEUR" />
+            </Principal>
+            <Dependent Role="dolphinmatch">
+              <PropertyRef Name="ID_UTILISATEUR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DolphinDbModelStoreContainer">
+          <EntitySet Name="division" EntityType="Self.division" Schema="dolphindb" store:Type="Tables" />
+          <EntitySet Name="dolphinmatch" EntityType="Self.dolphinmatch" Schema="dolphindb" store:Type="Tables" />
+          <EntitySet Name="piscine" EntityType="Self.piscine" Schema="dolphindb" store:Type="Tables" />
+          <EntitySet Name="utilisateur" EntityType="Self.utilisateur" Schema="dolphindb" store:Type="Tables" />
+          <AssociationSet Name="FK_DOLPHINMATCH_ID_DIVISION" Association="Self.FK_DOLPHINMATCH_ID_DIVISION">
+            <End Role="division" EntitySet="division" />
+            <End Role="dolphinmatch" EntitySet="dolphinmatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOLPHINMATCH_ID_PISCINE" Association="Self.FK_DOLPHINMATCH_ID_PISCINE">
+            <End Role="piscine" EntitySet="piscine" />
+            <End Role="dolphinmatch" EntitySet="dolphinmatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOLPHINMATCH_ID_UTILISATEUR" Association="Self.FK_DOLPHINMATCH_ID_UTILISATEUR">
+            <End Role="utilisateur" EntitySet="utilisateur" />
+            <End Role="dolphinmatch" EntitySet="dolphinmatch" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DolphinDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="division">
+          <Key>
+            <PropertyRef Name="ID_DIVISION" />
+          </Key>
+          <Property Name="ID_DIVISION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOM_DIVISION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LIBELLE_DIVISION" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="dolphinmatch" Relationship="Self.FK_DOLPHINMATCH_ID_DIVISION" FromRole="division" ToRole="dolphinmatch" />
+        </EntityType>
+        <EntityType Name="dolphinmatch">
+          <Key>
+            <PropertyRef Name="ID_MATCH" />
+          </Key>
+          <Property Name="ID_MATCH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DATE_MATCH" Type="DateTime" Nullable="false" />
+          <Property Name="SECOND_MATCH" Type="Boolean" Nullable="false" />
+          <Property Name="DISTANCE" Type="Decimal" Nullable="false" />
+          <Property Name="COUT" Type="Decimal" Nullable="false" />
+          <Property Name="ID_PISCINE" Type="Int32" Nullable="false" />
+          <Property Name="ID_DIVISION" Type="Int32" Nullable="false" />
+          <Property Name="ID_UTILISATEUR" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="division" Relationship="Self.FK_DOLPHINMATCH_ID_DIVISION" FromRole="dolphinmatch" ToRole="division" />
+          <NavigationProperty Name="piscine" Relationship="Self.FK_DOLPHINMATCH_ID_PISCINE" FromRole="dolphinmatch" ToRole="piscine" />
+          <NavigationProperty Name="utilisateur" Relationship="Self.FK_DOLPHINMATCH_ID_UTILISATEUR" FromRole="dolphinmatch" ToRole="utilisateur" />
+        </EntityType>
+        <EntityType Name="piscine">
+          <Key>
+            <PropertyRef Name="ID_PISCINE" />
+          </Key>
+          <Property Name="ID_PISCINE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOM_PISCINE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADR_LATITUDE" Type="Decimal" Nullable="false" />
+          <Property Name="ADR_LONGITUDE" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="dolphinmatch" Relationship="Self.FK_DOLPHINMATCH_ID_PISCINE" FromRole="piscine" ToRole="dolphinmatch" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="ID_UTILISATEUR" />
+          </Key>
+          <Property Name="ID_UTILISATEUR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LOGIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PRENOM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MOTDEPASSE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADR_LATITUDE" Type="Decimal" Nullable="false" />
+          <Property Name="ADR_LONGITUDE" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="dolphinmatch" Relationship="Self.FK_DOLPHINMATCH_ID_UTILISATEUR" FromRole="utilisateur" ToRole="dolphinmatch" />
+        </EntityType>
+        <Association Name="FK_DOLPHINMATCH_ID_DIVISION">
+          <End Role="division" Type="Self.division" Multiplicity="1" />
+          <End Role="dolphinmatch" Type="Self.dolphinmatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="division">
+              <PropertyRef Name="ID_DIVISION" />
+            </Principal>
+            <Dependent Role="dolphinmatch">
+              <PropertyRef Name="ID_DIVISION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOLPHINMATCH_ID_PISCINE">
+          <End Role="piscine" Type="Self.piscine" Multiplicity="1" />
+          <End Role="dolphinmatch" Type="Self.dolphinmatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="piscine">
+              <PropertyRef Name="ID_PISCINE" />
+            </Principal>
+            <Dependent Role="dolphinmatch">
+              <PropertyRef Name="ID_PISCINE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOLPHINMATCH_ID_UTILISATEUR">
+          <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="1" />
+          <End Role="dolphinmatch" Type="Self.dolphinmatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilisateur">
+              <PropertyRef Name="ID_UTILISATEUR" />
+            </Principal>
+            <Dependent Role="dolphinmatch">
+              <PropertyRef Name="ID_UTILISATEUR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DolphinEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="division" EntityType="Self.division" />
+          <EntitySet Name="dolphinmatch" EntityType="Self.dolphinmatch" />
+          <EntitySet Name="piscine" EntityType="Self.piscine" />
+          <EntitySet Name="utilisateur" EntityType="Self.utilisateur" />
+          <AssociationSet Name="FK_DOLPHINMATCH_ID_DIVISION" Association="Self.FK_DOLPHINMATCH_ID_DIVISION">
+            <End Role="division" EntitySet="division" />
+            <End Role="dolphinmatch" EntitySet="dolphinmatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOLPHINMATCH_ID_PISCINE" Association="Self.FK_DOLPHINMATCH_ID_PISCINE">
+            <End Role="piscine" EntitySet="piscine" />
+            <End Role="dolphinmatch" EntitySet="dolphinmatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOLPHINMATCH_ID_UTILISATEUR" Association="Self.FK_DOLPHINMATCH_ID_UTILISATEUR">
+            <End Role="utilisateur" EntitySet="utilisateur" />
+            <End Role="dolphinmatch" EntitySet="dolphinmatch" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DolphinDbModelStoreContainer" CdmEntityContainer="DolphinEntities">
+          <EntitySetMapping Name="division">
+            <EntityTypeMapping TypeName="DolphinDbModel.division">
+              <MappingFragment StoreEntitySet="division">
+                <ScalarProperty Name="ID_DIVISION" ColumnName="ID_DIVISION" />
+                <ScalarProperty Name="NOM_DIVISION" ColumnName="NOM_DIVISION" />
+                <ScalarProperty Name="LIBELLE_DIVISION" ColumnName="LIBELLE_DIVISION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dolphinmatch">
+            <EntityTypeMapping TypeName="DolphinDbModel.dolphinmatch">
+              <MappingFragment StoreEntitySet="dolphinmatch">
+                <ScalarProperty Name="ID_MATCH" ColumnName="ID_MATCH" />
+                <ScalarProperty Name="DATE_MATCH" ColumnName="DATE_MATCH" />
+                <ScalarProperty Name="SECOND_MATCH" ColumnName="SECOND_MATCH" />
+                <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
+                <ScalarProperty Name="COUT" ColumnName="COUT" />
+                <ScalarProperty Name="ID_PISCINE" ColumnName="ID_PISCINE" />
+                <ScalarProperty Name="ID_DIVISION" ColumnName="ID_DIVISION" />
+                <ScalarProperty Name="ID_UTILISATEUR" ColumnName="ID_UTILISATEUR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="piscine">
+            <EntityTypeMapping TypeName="DolphinDbModel.piscine">
+              <MappingFragment StoreEntitySet="piscine">
+                <ScalarProperty Name="ID_PISCINE" ColumnName="ID_PISCINE" />
+                <ScalarProperty Name="NOM_PISCINE" ColumnName="NOM_PISCINE" />
+                <ScalarProperty Name="ADR_LATITUDE" ColumnName="ADR_LATITUDE" />
+                <ScalarProperty Name="ADR_LONGITUDE" ColumnName="ADR_LONGITUDE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="utilisateur">
+            <EntityTypeMapping TypeName="DolphinDbModel.utilisateur">
+              <MappingFragment StoreEntitySet="utilisateur">
+                <ScalarProperty Name="ID_UTILISATEUR" ColumnName="ID_UTILISATEUR" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="NOM" ColumnName="NOM" />
+                <ScalarProperty Name="PRENOM" ColumnName="PRENOM" />
+                <ScalarProperty Name="MOTDEPASSE" ColumnName="MOTDEPASSE" />
+                <ScalarProperty Name="ADR_LATITUDE" ColumnName="ADR_LATITUDE" />
+                <ScalarProperty Name="ADR_LONGITUDE" ColumnName="ADR_LONGITUDE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
