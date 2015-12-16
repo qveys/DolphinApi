@@ -93,15 +93,31 @@ namespace DolphinApi.Controllers
         [ResponseType(typeof(dolphinmatch))]
         public IHttpActionResult Postdolphinmatch(dolphinmatch dolphinmatch)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                db.dolphinmatch.Add(dolphinmatch);
+                db.SaveChanges();
+
+                return CreatedAtRoute("DefaultApi", new { id = dolphinmatch.ID_MATCH }, dolphinmatch);
             }
+            catch (Exception ex)
+            {
 
-            db.dolphinmatch.Add(dolphinmatch);
-            db.SaveChanges();
+                string message = "";
+                var innerEx = ex;
+                while (innerEx != null)
+                {
+                    message = message + innerEx.Message;
+                    innerEx = innerEx.InnerException;
+                }
 
-            return CreatedAtRoute("DefaultApi", new { id = dolphinmatch.ID_MATCH }, dolphinmatch);
+                return BadRequest(message);
+            }
         }
 
         // DELETE: api/Match/5
