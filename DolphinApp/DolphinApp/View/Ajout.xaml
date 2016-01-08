@@ -1,0 +1,87 @@
+﻿<Page
+    x:Class="DolphinApp.View.Ajout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DolphinApp"
+    xmlns:model="using:DolphinApp.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Ajout}"
+    mc:Ignorable="d">
+
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <RelativePanel Background="#FFE76228" x:Name="Titre" Height="60" Grid.Row="0">
+            <TextBlock x:Uid="Text_Titre_Ajout" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="24" />
+        </RelativePanel>
+
+        <ScrollViewer Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="0" Padding="0">
+            <StackPanel Padding="0,0,0,12">
+
+                <RelativePanel Height="80">
+                    <TextBlock x:Uid="Text_SecondMatch" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0,0,0" />
+                    <ToggleSwitch x:Uid="Switch_SecondMatch" IsOn="{Binding SecondMatch, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="0,4,24,0" VerticalAlignment="Stretch" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignRightWithPanel="True" Padding="0" HorizontalContentAlignment="Right" MinWidth="0" />
+                </RelativePanel>
+
+                <RelativePanel Height="60" Background="#FFB1B1B1">
+                    <TextBlock x:Uid="Text_Categorie" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0" Foreground="#FF494949" FontWeight="Bold" />
+                </RelativePanel>
+
+                <ComboBox x:Name="ComboBox_Categorie" Height="80" ItemsSource="{Binding ListeDivision, Mode=TwoWay}" SelectedItem="{Binding DivisionSelected, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" MaxDropDownHeight="200" FontSize="20" Padding="20,5,20,7" HorizontalContentAlignment="Left" Margin="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:Division">
+                            <Grid>
+                                <TextBlock Text="{Binding NOM_DIVISION, Mode=TwoWay}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <RelativePanel Height="60" Background="#FFB1B1B1" >
+                    <TextBlock x:Uid="Text_Date" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0,0,0" Foreground="#FF494949" FontWeight="Bold" />
+                </RelativePanel>
+
+                <DatePicker FontSize="24" HorizontalAlignment="Stretch" Date="{Binding DateMatch, Mode=TwoWay}" MinYear="{Binding Today}" MaxWidth="Infinity" Margin="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="20"/>
+
+                <RelativePanel Height="60" Background="#FFB1B1B1" >
+                    <TextBlock x:Uid="Text_Lieu" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0,0,0" Foreground="#FF494949" FontWeight="Bold" />
+                </RelativePanel>
+
+                <ComboBox x:Name="ComboBox_Lieu" Height="80" ItemsSource="{Binding ListePiscine, Mode=TwoWay}" SelectedItem="{Binding PiscineSelected, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" MaxDropDownHeight="200" FontSize="20" Padding="20,5,20,7" HorizontalContentAlignment="Left" Margin="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:Piscine">
+                            <Grid>
+                                <TextBlock Text="{Binding NOM_PISCINE, Mode=TwoWay}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button x:Uid="Btn_Ajouter" Command="{Binding ValidMatch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="12,4" Height="60" FontSize="24"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.RowSpan="2" Name="Grid_Chargement" Visibility="{Binding Chargement, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.Background>
+                <SolidColorBrush Color="Gray" Opacity="0.5"/>
+            </Grid.Background>
+            <RelativePanel BorderBrush="Gray" Background="#FFE76228" Height="120" Grid.Row="0" BorderThickness="0,2,0,2">
+                <RelativePanel RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                    <ProgressBar Name="ProgressBar" Foreground="White" IsIndeterminate="True" VerticalAlignment="Center" Height="12" Width="120" FontSize="26.667" RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                    <TextBlock x:Uid="Text_Chargement" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="24" RelativePanel.Below="ProgressBar" />
+                </RelativePanel>
+            </RelativePanel>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Orientation" Click="ChangeOrientation"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

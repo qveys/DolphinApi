@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="DolphinApp.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DolphinApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+    mc:Ignorable="d">
+
+    <Grid Background="White">
+        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateLandscape">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="RelPan_Logo.(Grid.RowSpan)" Value="3"/>
+                        <Setter Target="RelPan_Logo.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="Img_Vague.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="RelPan_Btn_Welcome.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="RelPan_Btn_Welcome.(Grid.Column)" Value="1"/>
+                        <Setter Target="RelPan_Btn_Welcome.(Grid.RowSpan)" Value="3"/>
+                        <Setter Target="RelPan_Btn_Welcome.(Grid.Row)" Value="0"/>
+                        <Setter Target="RelPan_Btn_Welcome.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>0,20,20,20</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <!--AffichageTailleEcran-->
+        <TextBlock Margin="10,10,10,0" Height="50" VerticalAlignment="Top" TextAlignment="Center" Grid.ColumnSpan="3" Canvas.ZIndex="1">
+            <Run x:Name="ReportViewWidth"/> × <Run x:Name="ReportViewHeight"/>.
+        </TextBlock>
+        
+        
+        <RelativePanel x:Name="RelPan_Logo" Grid.ColumnSpan="3" Margin="20">
+            <Image x:Name="Img_Logo" Margin="0" Source="../Images/logo.png" MinWidth="100" MinHeight="132" MaxWidth="300" Grid.ColumnSpan="3" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+        </RelativePanel>
+        
+        <RelativePanel x:Name="RelPan_Btn_Welcome" Grid.ColumnSpan="3" Margin="20" Grid.Row="1">
+            <Button x:Name="Btn_Welcome" x:Uid="Btn_Welcome" Command="{Binding IsConnected}" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Padding="20,8" FontSize="28" FontFamily="Arial Black" FontWeight="Bold" />
+        </RelativePanel>
+        
+        <Image x:Name="Img_Vague" Grid.ColumnSpan="3" Grid.Row="2" Source="../Images/vague.png"/>
+
+    </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Orientation" Click="ChangeOrientation"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+</Page>

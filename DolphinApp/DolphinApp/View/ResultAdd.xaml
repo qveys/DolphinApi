@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="DolphinApp.View.ResultAdd"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DolphinApp.View"
+    xmlns:model="using:DolphinApp.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ResultAdd}"
+    mc:Ignorable="d">
+
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <RelativePanel Background="#FFE76228" x:Name="Titre" Height="60" Grid.Row="0">
+            <TextBlock x:Uid="Text_Titre_Resultat_Ajout" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="28" />
+        </RelativePanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <RelativePanel Padding="0,20">
+                <RelativePanel RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                    <TextBlock x:Name="Text_AllerJusque" x:Uid="Text_AllerJusque" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="20" />
+                    <TextBlock x:Name="Text_LaPiscine" x:Uid="Text_LaPiscine" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="20" RelativePanel.Below="Text_AllerJusque" />
+                    <TextBlock x:Name="Text_Resultat_Piscine" Text="{Binding Piscine}" Margin="0,20" Foreground="#FFE76228" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="28" RelativePanel.Below="Text_LaPiscine" FontWeight="Bold" />
+                    <TextBlock x:Name="Text_Parcours" x:Uid="Text_Parcours" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="20" RelativePanel.Below="Text_Resultat_Piscine" />
+                    <TextBlock x:Name="Text_Resultat_Km" Text="{Binding Kilometre}" Margin="0,20" Foreground="#FFE76228" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="28" RelativePanel.Below="Text_Parcours" FontWeight="Bold" />
+                    <TextBlock x:Name="Text_Percevoir" x:Uid="Text_Percevoir" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="20" RelativePanel.Below="Text_Resultat_Km" />
+                    <TextBlock x:Name="Text_Resultat_Prix" Text="{Binding Prix}" Margin="0,20,0,60" Foreground="#FF3286C0" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="28" RelativePanel.Below="Text_Percevoir" FontWeight="Bold" />
+                    <Button x:Uid="Btn_Accueil" Command="{Binding GoMenuPage}" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="Text_Resultat_Prix" FontSize="20" Padding="16,6" />
+                </RelativePanel>
+            </RelativePanel>
+        </ScrollViewer>
+    </Grid>
+
+</Page>

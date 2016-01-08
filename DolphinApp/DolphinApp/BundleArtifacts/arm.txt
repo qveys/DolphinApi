@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Quentin VEYS\Documents\VisualProjects\DolphinApi\DolphinApp\DolphinApp\bin\ARM\Debug\DolphinApp_1.0.0.0_ARM_Debug.appx
+ResourcePack=C:\Users\Quentin VEYS\Documents\VisualProjects\DolphinApi\DolphinApp\DolphinApp\bin\ARM\Debug\DolphinApp_1.0.0.0_language-en.appx

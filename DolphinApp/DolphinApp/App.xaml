@@ -1,0 +1,13 @@
+﻿<Application
+    x:Class="DolphinApp.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:DolphinApp.ViewModel"
+    xmlns:convert="using:DolphinApp.Converter"
+    xmlns:local="using:DolphinApp"
+    RequestedTheme="Light">
+    <Application.Resources>
+        <vm:ViewModelLocator x:Key="Locator"/>
+        <convert:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Application.Resources>
+</Application>
