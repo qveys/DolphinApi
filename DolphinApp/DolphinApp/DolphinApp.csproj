@@ -106,12 +106,14 @@
     <Compile Include="Model\Match.cs" />
     <Compile Include="Model\Piscine.cs" />
     <Compile Include="Model\Utilisateur.cs" />
+    <Compile Include="Trigger\DeviceTrigger.cs" />
     <Compile Include="ViewModel\AjoutViewModel.cs" />
     <Compile Include="ViewModel\ConnectionViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\MenuViewModel.cs" />
     <Compile Include="ViewModel\RechercheViewModel.cs" />
     <Compile Include="ViewModel\ResultAddViewModel.cs" />
+    <Compile Include="ViewModel\ResultSearchViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\Ajout.xaml.cs">
       <DependentUpon>Ajout.xaml</DependentUpon>
@@ -134,6 +136,9 @@
     </Compile>
     <Compile Include="View\ResultAdd.xaml.cs">
       <DependentUpon>ResultAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ResultSearch.xaml.cs">
+      <DependentUpon>ResultSearch.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ResultAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ResultSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

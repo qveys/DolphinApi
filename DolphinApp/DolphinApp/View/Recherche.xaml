@@ -3,9 +3,24 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DolphinApp"
+    xmlns:trigger="using:DolphinApp.Trigger"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Recherche}"
     mc:Ignorable="d">
+
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup x:Name="VisualStateGroup">
+            <VisualState x:Name="VisualStateMobile">
+                <VisualState.Setters>
+                    <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
+                </VisualState.Setters>
+                <VisualState.StateTriggers>
+                    <trigger:DeviceTrigger MobileDevice ="True"/>
+                </VisualState.StateTriggers>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
 
 
     <Grid Background="White">
@@ -24,20 +39,32 @@
             <StackPanel Padding="0,0,0,12">
 
                 <RelativePanel Height="60" Background="#FFB1B1B1" >
-                    <TextBlock Text="Date Début" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0,0,0" Foreground="#FF494949" FontWeight="Bold" />
+                    <TextBlock x:Uid="Text_DateDebut" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0,0,0" Foreground="#FF494949" FontWeight="Bold" />
                 </RelativePanel>
 
-                <DatePicker FontSize="24" HorizontalAlignment="Stretch" MaxWidth="Infinity" Margin="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="20"/>
+                <DatePicker FontSize="24" Date="{Binding StartDate,Mode=TwoWay}" HorizontalAlignment="Stretch" MaxWidth="Infinity" Margin="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="20"/>
 
                 <RelativePanel Height="60" Background="#FFB1B1B1" >
-                    <TextBlock Text="Date Fin" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0,0,0" Foreground="#FF494949" FontWeight="Bold" />
+                    <TextBlock x:Uid="Text_DateFin" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20" Margin="20,0,0,0" Foreground="#FF494949" FontWeight="Bold" />
                 </RelativePanel>
 
-                <DatePicker FontSize="24" HorizontalAlignment="Stretch" MaxWidth="Infinity" Margin="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="20"/>
+                <DatePicker FontSize="24" Date="{Binding EndDate, Mode=TwoWay}" HorizontalAlignment="Stretch" MaxWidth="Infinity" Margin="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="20"/>
 
-                <Button Content="Rechercher" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="12,4" Height="60" FontSize="24"/>
+                <Button x:Uid="Btn_Rechercher" Command="{Binding GoResultSearch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="12,4" Height="60" FontSize="24"/>
             </StackPanel>
         </ScrollViewer>
+
+        <Grid Grid.RowSpan="2" Name="Grid_Chargement" Visibility="{Binding Chargement, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.Background>
+                <SolidColorBrush Color="Gray" Opacity="0.5"/>
+            </Grid.Background>
+            <RelativePanel BorderBrush="Gray" Background="#FF3286C0" Height="120" Grid.Row="0" BorderThickness="0,2,0,2">
+                <RelativePanel RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                    <ProgressBar Name="ProgressBar" Foreground="White" IsIndeterminate="True" VerticalAlignment="Center" Height="12" Width="120" FontSize="26.667" RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                    <TextBlock x:Uid="Text_Chargement" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="24" RelativePanel.Below="ProgressBar" />
+                </RelativePanel>
+            </RelativePanel>
+        </Grid>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar>

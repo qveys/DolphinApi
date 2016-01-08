@@ -126,6 +126,9 @@
   <data name="Btn_Connection.Content" xml:space="preserve">
     <value>Connexion</value>
   </data>
+  <data name="Btn_Rechercher.Content" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
   <data name="Btn_Welcome.Content" xml:space="preserve">
     <value>Bienvenue</value>
   </data>
@@ -155,6 +158,12 @@
   </data>
   <data name="Text_Date.Text" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="Text_DateDebut.Text" xml:space="preserve">
+    <value>Date Début</value>
+  </data>
+  <data name="Text_DateFin.Text" xml:space="preserve">
+    <value>Date Fin</value>
   </data>
   <data name="Text_Deconnection.Text" xml:space="preserve">
     <value>Se Déconnecter</value>
@@ -192,11 +201,14 @@
   <data name="Text_SuppMatch.Text" xml:space="preserve">
     <value>Supprimer un Match</value>
   </data>
+  <data name="Text_Title_ResultSearch.Text" xml:space="preserve">
+    <value>Résultat de la recherche</value>
+  </data>
   <data name="Text_Titre_Ajout.Text" xml:space="preserve">
     <value>Ajouter un Match</value>
   </data>
   <data name="Text_Titre_Recherche.Text" xml:space="preserve">
-    <value>Rechercher</value>
+    <value>Recherche</value>
   </data>
   <data name="Text_Titre_Resultat_Ajout.Text" xml:space="preserve">
     <value>Bon Match !</value>

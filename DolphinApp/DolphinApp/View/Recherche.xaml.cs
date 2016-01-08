@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DolphinApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -44,5 +46,41 @@ namespace DolphinApp.View
         }
         #endregion ChangeOrientation
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var viewModel = ((RechercheViewModel)DataContext);
+            viewModel.Msg_StartDateAfterEndDate += Msg_StartDateAfterEndDate;
+            viewModel.Msg_EndDateBeforeStartDate += Msg_EndDateBeforeStartDate;
+            viewModel.Msg_NoResultSearch += Msg_NoResultSearch;
+            viewModel.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            var viewModel = ((RechercheViewModel)DataContext);
+            viewModel.Msg_StartDateAfterEndDate -= Msg_StartDateAfterEndDate;
+            viewModel.Msg_EndDateBeforeStartDate -= Msg_EndDateBeforeStartDate;
+            viewModel.Msg_NoResultSearch += Msg_NoResultSearch;
+        }
+
+        private async void Msg_EndDateBeforeStartDate(object sender, EventArgs e)
+        {
+            MessageDialog msgDialog = new MessageDialog("La date de fin de la recherche doit être situé après la date de début", "Oooops...");
+            await msgDialog.ShowAsync();
+        }
+
+        private async void Msg_StartDateAfterEndDate(object sender, EventArgs e)
+        {
+            MessageDialog msgDialog = new MessageDialog("La date de début de la recherche doit être situé avant la date de fin", "Oooops...");
+            await msgDialog.ShowAsync();
+        }
+
+        private async void Msg_NoResultSearch(object sender, EventArgs e)
+        {
+            MessageDialog msgDialog = new MessageDialog("L'intervalle de dates proposé ne contient aucun match..", "Oooops...");
+            await msgDialog.ShowAsync();
+        }
     }
 }

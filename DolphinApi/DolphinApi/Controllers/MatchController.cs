@@ -54,6 +54,29 @@ namespace DolphinApi.Controllers
             }
         }
 
+        // GET: api/Match?idUtilisateur=...&startDate=...&endDate=...
+        [ResponseType(typeof(dolphinmatch))]
+        public IEnumerable<dolphinmatch> Getdolphinmatch(string idUtilisateur, string startDate, string endDate)
+        {
+            try
+            {
+                int id = Convert.ToInt32(idUtilisateur);
+                DateTime dateStart = Convert.ToDateTime(startDate);
+                DateTime dateEnd = Convert.ToDateTime(endDate);
+                IEnumerable<dolphinmatch> dolphinmatch = db.dolphinmatch.Where(m => m.ID_UTILISATEUR == id).Where(m => m.DATE_MATCH >= dateStart).Where(m => m.DATE_MATCH <= dateEnd).ToList();
+                if (dolphinmatch == null)
+                {
+                    return null;
+                }
+
+                return dolphinmatch;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         // PUT: api/Match/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putdolphinmatch(int id, dolphinmatch dolphinmatch)

@@ -21,5 +21,9 @@ namespace DolphinApp.Model
         public Piscine PISCINE { get; set; }
         public Division DIVISION { get; set; }
 
+        public string GetDateMatch {
+            get { return DATE_MATCH.ToString("dd/MM/yyyy"); }
+        }
+
     }
 }

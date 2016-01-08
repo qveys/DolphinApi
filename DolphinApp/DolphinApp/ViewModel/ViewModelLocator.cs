@@ -21,6 +21,8 @@ namespace DolphinApp.ViewModel
             SimpleIoc.Default.Register<MenuViewModel>();
             SimpleIoc.Default.Register<AjoutViewModel>();
             SimpleIoc.Default.Register<ResultAddViewModel>();
+            SimpleIoc.Default.Register<RechercheViewModel>();
+            SimpleIoc.Default.Register<ResultSearchViewModel>();
 
             NavigationService navigationService = new NavigationService();
             SimpleIoc.Default.Register<INavigationService>(() => navigationService);
@@ -29,6 +31,8 @@ namespace DolphinApp.ViewModel
             navigationService.Configure("MenuPage", typeof(Menu));
             navigationService.Configure("AjoutPage", typeof(Ajout));
             navigationService.Configure("ResultAddPage", typeof(ResultAdd));
+            navigationService.Configure("RecherchePage", typeof(Recherche));
+            navigationService.Configure("ResultSearchPage", typeof(ResultSearch));
         }
 
         public MainPageViewModel Main
@@ -54,6 +58,16 @@ namespace DolphinApp.ViewModel
         public ResultAddViewModel ResultAdd
         {
             get { return ServiceLocator.Current.GetInstance<ResultAddViewModel>(); }
+        }
+
+        public RechercheViewModel Recherche
+        {
+            get { return ServiceLocator.Current.GetInstance<RechercheViewModel>(); }
+        }
+
+        public ResultSearchViewModel ResultSearch
+        {
+            get { return ServiceLocator.Current.GetInstance<ResultSearchViewModel>(); }
         }
     }
 }

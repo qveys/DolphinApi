@@ -224,6 +224,7 @@ namespace DolphinApp.ViewModel
             {
                 newMatch.DIVISION = DivisionSelected;
                 newMatch.PISCINE = PiscineSelected;
+                Chargement = false;
                 var parameters = new List<Object>();
                 parameters.Add(User);
                 parameters.Add(newMatch);

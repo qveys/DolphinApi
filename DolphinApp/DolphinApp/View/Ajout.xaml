@@ -4,10 +4,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DolphinApp"
     xmlns:model="using:DolphinApp.Model"
+    xmlns:trigger="using:DolphinApp.Trigger"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     DataContext="{Binding Source={StaticResource Locator}, Path=Ajout}"
     mc:Ignorable="d">
+
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup x:Name="VisualStateGroup">
+            <VisualState x:Name="VisualStateMobile">
+                <VisualState.Setters>
+                    <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
+                </VisualState.Setters>
+                <VisualState.StateTriggers>
+                    <trigger:DeviceTrigger MobileDevice ="True"/>
+                </VisualState.StateTriggers>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
 
     <Grid Background="White">
 

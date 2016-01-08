@@ -43,18 +43,20 @@ namespace DolphinApp.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ((AjoutViewModel)DataContext).Msg_ErreurChargementListes += Msg_ErreurChargementListes;
-            ((AjoutViewModel)DataContext).Msg_ErreurValidMatch += Msg_ErreurValidMatch;
-            ((AjoutViewModel)DataContext).Msg_ErreurDate += Msg_ErreurDate;
-            ((AjoutViewModel)DataContext).OnNavigatedTo(e);
+            var viewModel = ((AjoutViewModel)DataContext);
+            viewModel.Msg_ErreurChargementListes += Msg_ErreurChargementListes;
+            viewModel.Msg_ErreurValidMatch += Msg_ErreurValidMatch;
+            viewModel.Msg_ErreurDate += Msg_ErreurDate;
+            viewModel.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            ((AjoutViewModel)DataContext).Msg_ErreurChargementListes -= Msg_ErreurChargementListes;
-            ((AjoutViewModel)DataContext).Msg_ErreurValidMatch -= Msg_ErreurValidMatch;
-            ((AjoutViewModel)DataContext).Msg_ErreurDate -= Msg_ErreurDate;
+            var viewModel = ((AjoutViewModel)DataContext);
+            viewModel.Msg_ErreurChargementListes -= Msg_ErreurChargementListes;
+            viewModel.Msg_ErreurValidMatch -= Msg_ErreurValidMatch;
+            viewModel.Msg_ErreurDate -= Msg_ErreurDate;
         }
 
         private async void Msg_ErreurChargementListes(object sender, EventArgs e)
