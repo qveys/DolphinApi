@@ -102,27 +102,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="DataAccess\AccessApi.cs" />
+    <Compile Include="DataAccess\IAccessApi.cs" />
+    <Compile Include="Model\DeleteEventArgs.cs" />
     <Compile Include="Model\Division.cs" />
     <Compile Include="Model\Match.cs" />
     <Compile Include="Model\Piscine.cs" />
+    <Compile Include="Model\Totaux.cs" />
     <Compile Include="Model\Utilisateur.cs" />
     <Compile Include="Trigger\DeviceTrigger.cs" />
-    <Compile Include="ViewModel\AjoutViewModel.cs" />
+    <Compile Include="ViewModel\AddMatchViewModel.cs" />
     <Compile Include="ViewModel\ConnectionViewModel.cs" />
+    <Compile Include="ViewModel\DeleteMatchViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\MenuViewModel.cs" />
     <Compile Include="ViewModel\RechercheViewModel.cs" />
     <Compile Include="ViewModel\ResultAddViewModel.cs" />
     <Compile Include="ViewModel\ResultSearchViewModel.cs" />
+    <Compile Include="ViewModel\ResultTotalsViewModel.cs" />
+    <Compile Include="ViewModel\TotalsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\Ajout.xaml.cs">
-      <DependentUpon>Ajout.xaml</DependentUpon>
+    <Compile Include="View\AddMatch.xaml.cs">
+      <DependentUpon>AddMatch.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Connection.xaml.cs">
       <DependentUpon>Connection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DeleteMatch.xaml.cs">
+      <DependentUpon>DeleteMatch.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -140,6 +150,12 @@
     <Compile Include="View\ResultSearch.xaml.cs">
       <DependentUpon>ResultSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ResultTotals.xaml.cs">
+      <DependentUpon>ResultTotals.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Totals.xaml.cs">
+      <DependentUpon>Totals.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -151,6 +167,7 @@
     <Content Include="Images\iconerecherches.png" />
     <Content Include="Images\landscapemenu.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\logo620x300.png" />
     <Content Include="Images\menu.png" />
     <Content Include="Images\vague.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -167,11 +184,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\Ajout.xaml">
+    <Page Include="View\AddMatch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Connection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DeleteMatch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,6 +213,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ResultSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ResultTotals.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Totals.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

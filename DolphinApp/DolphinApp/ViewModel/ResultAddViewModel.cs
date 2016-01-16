@@ -20,8 +20,20 @@ namespace DolphinApp.ViewModel
         public ResultAddViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-
         }
+
+        public void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var parameters = e.Parameter as List<Object>;
+            User = parameters.First() as Utilisateur;
+            Match m = parameters.Last() as Match;
+
+            Piscine = m.PISCINE.NOM_PISCINE;
+            Kilometre = m.DISTANCE.ToString("#.##") + " km";
+            Prix = m.COUT.ToString("#.##") + " €";
+        }
+
+        public Utilisateur User { get; set; }
 
         private string _piscine;
         public string Piscine
@@ -56,19 +68,6 @@ namespace DolphinApp.ViewModel
             }
         }
 
-        public Utilisateur User { get; set; }
-
-        public void OnNavigatedTo(NavigationEventArgs e)
-        {
-            var parameters = e.Parameter as List<Object>;
-            User = parameters.First() as Utilisateur;
-            Match m = parameters.Last() as Match;
-
-            Piscine = m.PISCINE.NOM_PISCINE;
-            Kilometre = m.DISTANCE.ToString("#.##") + " km";
-            Prix = m.COUT.ToString("#.##") + " €";
-        }
-
         private ICommand _goMenuPage;
         public ICommand GoMenuPage
         {
@@ -86,5 +85,6 @@ namespace DolphinApp.ViewModel
         {
             _navigationService.NavigateTo("MenuPage", User);
         }
+
     }
 }

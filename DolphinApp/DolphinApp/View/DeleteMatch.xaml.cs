@@ -1,9 +1,11 @@
-﻿using DolphinApp.ViewModel;
+﻿using DolphinApp.Model;
+using DolphinApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -23,9 +25,9 @@ namespace DolphinApp.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Recherche : Page
+    public sealed partial class DeleteMatch : Page
     {
-        public Recherche()
+        public DeleteMatch()
         {
             this.InitializeComponent();
         }
@@ -49,10 +51,10 @@ namespace DolphinApp.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var viewModel = ((RechercheViewModel)DataContext);
-            viewModel.Msg_StartDateAfterEndDate += Msg_StartDateAfterEndDate;
-            viewModel.Msg_EndDateBeforeStartDate += Msg_EndDateBeforeStartDate;
-            viewModel.Msg_NoResultSearch += Msg_NoResultSearch;
+            var viewModel = ((DeleteMatchViewModel)DataContext);
+            viewModel.Msg_ErreurChargementListe += Msg_ErreurChargementListe;
+            viewModel.Msg_SureToDelete += Msg_SureToDelete;
+            viewModel.Msg_ValidDeleteMatch += Msg_ValidDeleteMatch;
             viewModel.Msg_ErreurInternet += Msg_ErreurInternet;
             viewModel.OnNavigatedTo(e);
         }
@@ -60,28 +62,33 @@ namespace DolphinApp.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            var viewModel = ((RechercheViewModel)DataContext);
-            viewModel.Msg_StartDateAfterEndDate -= Msg_StartDateAfterEndDate;
-            viewModel.Msg_EndDateBeforeStartDate -= Msg_EndDateBeforeStartDate;
-            viewModel.Msg_NoResultSearch -= Msg_NoResultSearch;
+            var viewModel = ((DeleteMatchViewModel)DataContext);
+            viewModel.Msg_ErreurChargementListe -= Msg_ErreurChargementListe;
+            viewModel.Msg_SureToDelete -= Msg_SureToDelete;
+            viewModel.Msg_ValidDeleteMatch -= Msg_ValidDeleteMatch;
             viewModel.Msg_ErreurInternet -= Msg_ErreurInternet;
         }
 
-        private async void Msg_EndDateBeforeStartDate(object sender, EventArgs e)
+        private async Task<bool> Msg_SureToDelete(object sender, DeleteEventArgs e)
         {
-            MessageDialog msgDialog = new MessageDialog("La date de fin de la recherche doit être situé après la date de début", "Oooops...");
+            MessageDialog msgDialog = new MessageDialog("Etes-vous sur de vouloir supprimer le match " + e.Division + " du " + e.MatchDate + " à la piscine de " + e.Piscine);
+            msgDialog.Commands.Add(new UICommand("Yes") { Id = 1 });
+            msgDialog.Commands.Add(new Windows.UI.Popups.UICommand("No") { Id = 0 });
+            msgDialog.DefaultCommandIndex = 1;
+            msgDialog.CancelCommandIndex = 0;
+            var result = await msgDialog.ShowAsync();
+            return ((Convert.ToInt32(result.Id).Equals(1)) ? true : false);
+        }
+
+        private async void Msg_ErreurChargementListe(object sender, EventArgs e)
+        {
+            MessageDialog msgDialog = new MessageDialog("Une erreur est survenue lors de la récupération de la liste des matchs. \nVérifier votre connection internet!", "Oooops...");
             await msgDialog.ShowAsync();
         }
 
-        private async void Msg_StartDateAfterEndDate(object sender, EventArgs e)
+        private async void Msg_ValidDeleteMatch(object sender, EventArgs e)
         {
-            MessageDialog msgDialog = new MessageDialog("La date de début de la recherche doit être situé avant la date de fin", "Oooops...");
-            await msgDialog.ShowAsync();
-        }
-
-        private async void Msg_NoResultSearch(object sender, EventArgs e)
-        {
-            MessageDialog msgDialog = new MessageDialog("L'intervalle de dates proposé ne contient aucun match..", "Oooops...");
+            MessageDialog msgDialog = new MessageDialog("Le Match a correctement été supprimé! :)", "OK");
             await msgDialog.ShowAsync();
         }
 

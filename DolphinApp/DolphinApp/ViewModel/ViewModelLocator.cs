@@ -19,20 +19,26 @@ namespace DolphinApp.ViewModel
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<ConnectionViewModel>();
             SimpleIoc.Default.Register<MenuViewModel>();
-            SimpleIoc.Default.Register<AjoutViewModel>();
+            SimpleIoc.Default.Register<AddMatchViewModel>();
             SimpleIoc.Default.Register<ResultAddViewModel>();
             SimpleIoc.Default.Register<RechercheViewModel>();
             SimpleIoc.Default.Register<ResultSearchViewModel>();
+            SimpleIoc.Default.Register<TotalsViewModel>();
+            SimpleIoc.Default.Register<ResultTotalsViewModel>();
+            SimpleIoc.Default.Register<DeleteMatchViewModel>();
 
             NavigationService navigationService = new NavigationService();
-            SimpleIoc.Default.Register<INavigationService>(() => navigationService);
             navigationService.Configure("MainPage", typeof(MainPage));
             navigationService.Configure("ConnectionPage", typeof(Connection));
             navigationService.Configure("MenuPage", typeof(Menu));
-            navigationService.Configure("AjoutPage", typeof(Ajout));
+            navigationService.Configure("AddMatchPage", typeof(AddMatch));
             navigationService.Configure("ResultAddPage", typeof(ResultAdd));
             navigationService.Configure("RecherchePage", typeof(Recherche));
             navigationService.Configure("ResultSearchPage", typeof(ResultSearch));
+            navigationService.Configure("TotalsPage", typeof(Totals));
+            navigationService.Configure("ResultTotalsPage", typeof(ResultTotals));
+            navigationService.Configure("DeleteMatchPage", typeof(DeleteMatch));
+            SimpleIoc.Default.Register<INavigationService>(() => navigationService);
         }
 
         public MainPageViewModel Main
@@ -50,9 +56,9 @@ namespace DolphinApp.ViewModel
             get { return ServiceLocator.Current.GetInstance<MenuViewModel>(); }
         }
 
-        public AjoutViewModel Ajout
+        public AddMatchViewModel AddMatch
         {
-            get { return ServiceLocator.Current.GetInstance<AjoutViewModel>(); }
+            get { return ServiceLocator.Current.GetInstance<AddMatchViewModel>(); }
         }
 
         public ResultAddViewModel ResultAdd
@@ -68,6 +74,21 @@ namespace DolphinApp.ViewModel
         public ResultSearchViewModel ResultSearch
         {
             get { return ServiceLocator.Current.GetInstance<ResultSearchViewModel>(); }
+        }
+
+        public TotalsViewModel Totals
+        {
+            get { return ServiceLocator.Current.GetInstance<TotalsViewModel>(); }
+        }
+
+        public ResultTotalsViewModel ResultTotals
+        {
+            get { return ServiceLocator.Current.GetInstance<ResultTotalsViewModel>(); }
+        }
+
+        public DeleteMatchViewModel DeleteMatch
+        {
+            get { return ServiceLocator.Current.GetInstance<DeleteMatchViewModel>(); }
         }
     }
 }

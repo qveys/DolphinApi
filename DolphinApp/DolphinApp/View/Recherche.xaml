@@ -9,21 +9,20 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=Recherche}"
     mc:Ignorable="d">
 
-    <VisualStateManager.VisualStateGroups>
-        <VisualStateGroup x:Name="VisualStateGroup">
-            <VisualState x:Name="VisualStateMobile">
-                <VisualState.Setters>
-                    <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
-                </VisualState.Setters>
-                <VisualState.StateTriggers>
-                    <trigger:DeviceTrigger MobileDevice ="True"/>
-                </VisualState.StateTriggers>
-            </VisualState>
-        </VisualStateGroup>
-    </VisualStateManager.VisualStateGroups>
-
-
     <Grid Background="White">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateMobile">
+                    <VisualState.Setters>
+                        <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <trigger:DeviceTrigger MobileDevice ="True"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -66,8 +65,9 @@
             </RelativePanel>
         </Grid>
     </Grid>
+
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar x:Name="commandBar">
             <AppBarButton Icon="Orientation" Click="ChangeOrientation"/>
         </CommandBar>
     </Page.BottomAppBar>

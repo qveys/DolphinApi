@@ -10,7 +10,8 @@ namespace DolphinApp.Trigger
     public class DeviceTrigger : StateTriggerBase
     {
 
-        public bool MobileDevice { get;  set; }
+        public bool MobileDevice { get;
+            set; }
 
         public DeviceTrigger()
         {

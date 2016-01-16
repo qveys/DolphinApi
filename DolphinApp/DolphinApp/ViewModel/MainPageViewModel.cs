@@ -22,7 +22,6 @@ namespace DolphinApp.ViewModel
         public MainPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-
         }
 
         private ICommand _isConnected;

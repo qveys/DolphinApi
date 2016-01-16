@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="DolphinApp.View.ResultSearch"
+    x:Class="DolphinApp.View.DeleteMatch"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DolphinApp.View"
@@ -7,11 +7,10 @@
     xmlns:trigger="using:DolphinApp.Trigger"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    DataContext="{Binding Source={StaticResource Locator}, Path=ResultSearch}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=DeleteMatch}"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateMobile">
@@ -24,17 +23,21 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
             <RowDefinition />
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <RelativePanel Background="#FF3286C0" x:Name="Titre" Height="60" Grid.Row="0">
-            <TextBlock x:Uid="Text_Title_ResultSearch" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="28" />
+        <RelativePanel Background="#FFE76228" x:Name="Titre" Height="60" Grid.Row="0">
+            <TextBlock x:Uid="Text_Title_DeleteMatch" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="28" />
         </RelativePanel>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding ListResult}" SelectionMode="None"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="16" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" IsTapEnabled="False" ManipulationMode="None" IsMultiSelectCheckBoxEnabled="False" IsTextScaleFactorEnabled="False" IsZoomedInView="False">
+        <TextBlock Grid.Row="1" x:Uid="Text_DeleteMatch" Margin="10,0" Foreground="Black" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="18" />
+
+        <ListView Grid.Row="2" ItemsSource="{Binding ListMatchs}" SelectedItem="{Binding SelectedMatch, Mode=TwoWay}" SelectionMode="Single"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="16" IsMultiSelectCheckBoxEnabled="False">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Match">
                     <Grid Margin="0,0,12,0">
@@ -42,12 +45,10 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="3*" />
-                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding DIVISION.LIBELLE_DIVISION}" Grid.Column="0" HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding GetDateMatch}" Grid.Column="1" HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding PISCINE.NOM_PISCINE}" Grid.Column="2" HorizontalAlignment="Center" />
-                        <TextBlock Text="{Binding COUT}" Grid.Column="3" HorizontalAlignment="Center" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -57,6 +58,21 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
+
+        <Button x:Uid="Btn_Delete" Grid.Row="3" Command="{Binding DeleteMatch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="12,4" Height="60" FontSize="24"/>
+
+        <Grid Grid.RowSpan="4" Name="Grid_Chargement" Visibility="{Binding Chargement, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.Background>
+                <SolidColorBrush Color="Gray" Opacity="0.5"/>
+            </Grid.Background>
+            <RelativePanel BorderBrush="Gray" Background="#FFE76228" Height="120" Grid.Row="0" BorderThickness="0,2,0,2">
+                <RelativePanel RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                    <ProgressBar Name="ProgressBar" Foreground="White" IsIndeterminate="True" VerticalAlignment="Center" Height="12" Width="120" FontSize="26.667" RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                    <TextBlock x:Uid="Text_Chargement" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="24" RelativePanel.Below="ProgressBar" />
+                </RelativePanel>
+            </RelativePanel>
+        </Grid>
+
     </Grid>
 
     <Page.BottomAppBar>

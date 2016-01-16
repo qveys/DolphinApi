@@ -5,6 +5,7 @@
     xmlns:vm="using:DolphinApp.ViewModel"
     xmlns:convert="using:DolphinApp.Converter"
     xmlns:local="using:DolphinApp"
+    xmlns:v="using:DolphinApp.View"
     RequestedTheme="Light">
     <Application.Resources>
         <vm:ViewModelLocator x:Key="Locator"/>

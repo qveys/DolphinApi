@@ -1,13 +1,20 @@
 ﻿using DolphinApp.ViewModel;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.UI.Notifications;
+using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -16,13 +23,13 @@ namespace DolphinApp.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Ajout : Page
+    public sealed partial class AddMatch : Page
     {
-
-        public Ajout()
+        public AddMatch()
         {
             this.InitializeComponent();
         }
+
 
         #region ChangeOrientation
         //Forcing Phone 4"
@@ -43,7 +50,7 @@ namespace DolphinApp.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var viewModel = ((AjoutViewModel)DataContext);
+            var viewModel = ((AddMatchViewModel)DataContext);
             viewModel.Msg_ErreurChargementListes += Msg_ErreurChargementListes;
             viewModel.Msg_ErreurValidMatch += Msg_ErreurValidMatch;
             viewModel.Msg_ErreurDate += Msg_ErreurDate;
@@ -53,7 +60,7 @@ namespace DolphinApp.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            var viewModel = ((AjoutViewModel)DataContext);
+            var viewModel = ((AddMatchViewModel)DataContext);
             viewModel.Msg_ErreurChargementListes -= Msg_ErreurChargementListes;
             viewModel.Msg_ErreurValidMatch -= Msg_ErreurValidMatch;
             viewModel.Msg_ErreurDate -= Msg_ErreurDate;

@@ -4,12 +4,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DolphinApp.View"
     xmlns:model="using:DolphinApp.Model"
+    xmlns:trigger="using:DolphinApp.Trigger"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     DataContext="{Binding Source={StaticResource Locator}, Path=ResultAdd}"
     mc:Ignorable="d">
 
     <Grid Background="White">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateMobile">
+                    <VisualState.Setters>
+                        <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <trigger:DeviceTrigger MobileDevice ="True"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -35,5 +49,11 @@
             </RelativePanel>
         </ScrollViewer>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar x:Name="commandBar">
+            <AppBarButton Icon="Orientation" Click="ChangeOrientation" />
+        </CommandBar>
+    </Page.BottomAppBar>
 
 </Page>

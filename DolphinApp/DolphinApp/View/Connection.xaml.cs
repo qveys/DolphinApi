@@ -51,15 +51,17 @@ namespace DolphinApp.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ((ConnectionViewModel)DataContext).Msg_ErreurInternet += Msg_ErreurInternet;
-            ((ConnectionViewModel)DataContext).Msg_ErreurUser += Msg_ErreurUser;
+            var viewModel = ((ConnectionViewModel)DataContext);
+            viewModel.Msg_ErreurInternet += Msg_ErreurInternet;
+            viewModel.Msg_ErreurUser += Msg_ErreurUser;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            ((ConnectionViewModel)DataContext).Msg_ErreurInternet -= Msg_ErreurInternet;
-            ((ConnectionViewModel)DataContext).Msg_ErreurUser -= Msg_ErreurUser;
+            var viewModel = ((ConnectionViewModel)DataContext);
+            viewModel.Msg_ErreurInternet -= Msg_ErreurInternet;
+            viewModel.Msg_ErreurUser -= Msg_ErreurUser;
         }
 
         private async void Msg_ErreurUser(object sender, EventArgs e)

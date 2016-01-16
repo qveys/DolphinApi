@@ -46,6 +46,7 @@ namespace DolphinApp.ViewModel
         public event EventHandler Msg_StartDateAfterEndDate;
         public event EventHandler Msg_EndDateBeforeStartDate;
         public event EventHandler Msg_NoResultSearch;
+        public event EventHandler Msg_ErreurInternet;
 
         private DateTimeOffset _startDate;
         public DateTimeOffset StartDate
@@ -80,29 +81,19 @@ namespace DolphinApp.ViewModel
             {
                 if (_goResultSearch == null)
                 {
-                    _goResultSearch = new RelayCommand(() => IsResultSearch());
+                    _goResultSearch = new RelayCommand(() => IsGoResultPage());
                 }
                 return _goResultSearch;
             }
         }
 
-        private async void IsResultSearch()
+        private async void IsGoResultPage()
         {
             if (StartDate < EndDate)
             {
                 if (EndDate > StartDate)
                 {
-                    Chargement = true;
-                    await SearchResults();
-                    if (ListResult.Count() != 0)
-                    {
-                        NavToResultSearch();
-                    }
-                    else
-                    {
-                        Msg_NoResultSearch(this, new EventArgs());
-                    }
-                    Chargement = false;
+                    await IsResultSearch();
                 }
                 else
                 {
@@ -113,6 +104,32 @@ namespace DolphinApp.ViewModel
             {
                 Msg_StartDateAfterEndDate(this, new EventArgs());
             }
+        }
+
+        private async Task IsResultSearch()
+        {
+            try
+            {
+                Chargement = true;
+                await SearchResults();
+                if (ListResult.Count() != 0)
+                {
+                    NavToResultSearch();
+                }
+                else
+                {
+                    Msg_NoResultSearch(this, new EventArgs());
+                }
+            }
+            catch
+            {
+                Msg_ErreurInternet(this, new EventArgs());
+            }
+            finally 
+            {
+                Chargement = false;
+            }
+            
         }
 
         private async Task SearchResults()
@@ -133,10 +150,7 @@ namespace DolphinApp.ViewModel
 
         private void NavToResultSearch()
         {
-            var parameters = new List<Object>();
-            parameters.Add(User);
-            parameters.Add(ListResult);
-            _navigationService.NavigateTo("ResultSearchPage", parameters);
+            _navigationService.NavigateTo("ResultSearchPage", ListResult);
         }
     }
 }

@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <Grid Background="White">
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateLandscape">
@@ -35,16 +35,16 @@
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateMobile">
-                    <VisualState.Setters>
-                        <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
-                    </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <trigger:DeviceTrigger MobileDevice ="True"/>
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="4*"/>
@@ -64,13 +64,24 @@
             <Button x:Name="Btn_Connection" x:Uid="Btn_Connection" Command="{Binding GoMenu}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Stretch" FontSize="24" RelativePanel.AlignHorizontalCenterWithPanel="True" Padding="20,8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RelativePanel.Below="PasswordBox_UserPassword"/>
             <CheckBox x:Name="CheckBox_SaveConnection" x:Uid="CheckBox_SaveConnection" IsChecked="{Binding RememberMe, Mode=TwoWay}" RelativePanel.Below="Btn_Connection" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,0,0,0" FontSize="16" />
         </RelativePanel>
-        
+
+        <Grid Grid.RowSpan="2" Grid.ColumnSpan="2" Name="Grid_Chargement" Visibility="{Binding Chargement, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.Background>
+                <SolidColorBrush Color="Gray" Opacity="0.5"/>
+            </Grid.Background>
+            <RelativePanel BorderBrush="Gray" Background="#FF3286C0" Height="120" Grid.Row="0" BorderThickness="0,2,0,2">
+                <RelativePanel RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                    <ProgressBar Name="ProgressBar" Foreground="White" IsIndeterminate="True" VerticalAlignment="Center" Height="12" Width="120" FontSize="26.667" RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                    <TextBlock x:Uid="Text_Chargement" Margin="0" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" FontSize="24" RelativePanel.Below="ProgressBar" />
+                </RelativePanel>
+            </RelativePanel>
+        </Grid>
     </Grid>
-    
+
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar x:Name="commandBar">
             <AppBarButton Icon="Orientation" Click="ChangeOrientation"/>
         </CommandBar>
     </Page.BottomAppBar>
-    
+
 </Page>

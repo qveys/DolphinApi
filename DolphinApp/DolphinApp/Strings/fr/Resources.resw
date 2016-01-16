@@ -123,8 +123,14 @@
   <data name="Btn_Ajouter.Content" xml:space="preserve">
     <value>Ajouter</value>
   </data>
+  <data name="Btn_Calculate.Content" xml:space="preserve">
+    <value>Calculer</value>
+  </data>
   <data name="Btn_Connection.Content" xml:space="preserve">
     <value>Connexion</value>
+  </data>
+  <data name="Btn_Delete.Content" xml:space="preserve">
+    <value>Supprimer</value>
   </data>
   <data name="Btn_Rechercher.Content" xml:space="preserve">
     <value>Rechercher</value>
@@ -168,6 +174,15 @@
   <data name="Text_Deconnection.Text" xml:space="preserve">
     <value>Se Déconnecter</value>
   </data>
+  <data name="Text_DeleteMatch.Text" xml:space="preserve">
+    <value>Selectionner un match</value>
+  </data>
+  <data name="Text_FirstMonth.Text" xml:space="preserve">
+    <value>Mois de commencement</value>
+  </data>
+  <data name="Text_FirstYear.Text" xml:space="preserve">
+    <value>Année de commencement</value>
+  </data>
   <data name="Text_GestionMatch.Text" xml:space="preserve">
     <value>Gestion Match</value>
   </data>
@@ -179,6 +194,9 @@
   </data>
   <data name="Text_Lieu.Text" xml:space="preserve">
     <value>Lieu</value>
+  </data>
+  <data name="Text_Month.Text" xml:space="preserve">
+    <value>Mois</value>
   </data>
   <data name="Text_NouvMatch.Text" xml:space="preserve">
     <value>Ajouter un Match</value>
@@ -195,14 +213,26 @@
   <data name="Text_Salaire.Text" xml:space="preserve">
     <value>Salaire</value>
   </data>
+  <data name="Text_Season.Text" xml:space="preserve">
+    <value>Saison</value>
+  </data>
   <data name="Text_SecondMatch.Text" xml:space="preserve">
     <value>Second Match</value>
   </data>
   <data name="Text_SuppMatch.Text" xml:space="preserve">
     <value>Supprimer un Match</value>
   </data>
+  <data name="Text_Title_DeleteMatch.Text" xml:space="preserve">
+    <value>Supprimer un Match</value>
+  </data>
   <data name="Text_Title_ResultSearch.Text" xml:space="preserve">
     <value>Résultat de la recherche</value>
+  </data>
+  <data name="Text_Title_ResultTotals.Text" xml:space="preserve">
+    <value>Résultat des totaux</value>
+  </data>
+  <data name="Text_Title_Totals.Text" xml:space="preserve">
+    <value>Totaux</value>
   </data>
   <data name="Text_Titre_Ajout.Text" xml:space="preserve">
     <value>Ajouter un Match</value>
@@ -215,5 +245,8 @@
   </data>
   <data name="Text_Totaux.Text" xml:space="preserve">
     <value>Totaux</value>
+  </data>
+  <data name="Text_Year.Text" xml:space="preserve">
+    <value>Année</value>
   </data>
 </root>

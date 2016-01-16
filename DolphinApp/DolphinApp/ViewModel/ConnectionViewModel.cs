@@ -23,10 +23,22 @@ namespace DolphinApp.ViewModel
         public ConnectionViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+            Chargement = false;
         }
 
         public event EventHandler Msg_ErreurInternet;
         public event EventHandler Msg_ErreurUser;
+
+        private bool _chargement;
+        public bool Chargement
+        {
+            get { return _chargement; }
+            set
+            {
+                _chargement = value;
+                RaisePropertyChanged("Chargement");
+            }
+        }
 
         public bool RememberMe { get; set; }
 
@@ -38,6 +50,7 @@ namespace DolphinApp.ViewModel
         }
 
         public string UserPassword { get; set; }
+
         public Utilisateur User { get; set; }
 
         private ICommand _goMenuPage;
@@ -57,12 +70,12 @@ namespace DolphinApp.ViewModel
         {
             try
             {
+                Chargement = true;
                 User = await IsUserExist();
                 if (User != null && UserPassword != null && IsPasswordRight())
                 {
                     if (RememberMe)
-                        await RememberUser();
-
+                        await RememberUser(); 
                     _navigationService.NavigateTo("MenuPage", User);
                 }
                 else
@@ -74,24 +87,10 @@ namespace DolphinApp.ViewModel
             {
                 Msg_ErreurInternet(this, new EventArgs());
             }
-        }
-
-        private async Task RememberUser()
-        {
-            try
+            finally
             {
-                var appData = Windows.Storage.ApplicationData.Current;
-                var localFolder = appData.LocalFolder;
-                var storageFile = await localFolder.CreateFileAsync("user.json", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-                var userString = Newtonsoft.Json.JsonConvert.SerializeObject(User);
-                await Windows.Storage.FileIO.WriteTextAsync(storageFile, userString);
-                appData.LocalSettings.Values["Remember"] = "true";
+                Chargement = false;
             }
-            catch
-            {
-
-            }
-
         }
 
         private async Task<Utilisateur> IsUserExist()
@@ -135,6 +134,20 @@ namespace DolphinApp.ViewModel
             IBuffer buffHash1 = objHash.GetValueAndReset();
 
             return CryptographicBuffer.EncodeToBase64String(buffHash1);
+        }
+
+        private async Task RememberUser()
+        {
+            try
+            {
+                var appData = Windows.Storage.ApplicationData.Current;
+                var localFolder = appData.LocalFolder;
+                var storageFile = await localFolder.CreateFileAsync("user.json", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+                var userString = Newtonsoft.Json.JsonConvert.SerializeObject(User);
+                await Windows.Storage.FileIO.WriteTextAsync(storageFile, userString);
+                appData.LocalSettings.Values["Remember"] = "true";
+            }
+            catch { throw; }
         }
     }
 }

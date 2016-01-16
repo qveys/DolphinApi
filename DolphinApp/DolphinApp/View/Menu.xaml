@@ -10,8 +10,7 @@
     mc:Ignorable="d" >
 
     <Page.Resources>
-
-        <Style x:Key="ToggleButtonMyStyle" TargetType="ToggleButton">
+        <Style x:Key="ToggleButton_GestionMatch" TargetType="ToggleButton">
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}"/>
@@ -39,28 +38,32 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}"/>
-                                            </ObjectAnimationUsingKeyFrames>
                                             <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
                                         </Storyboard>
                                     </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledTransparentBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
                                     <VisualState x:Name="Checked">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltChromeWhiteBrush}"/>
-                                            </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltTransparentBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
@@ -72,16 +75,16 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltChromeWhiteBrush}"/>
-                                            </ObjectAnimationUsingKeyFrames>
                                             <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="CheckedPressed">
                                         <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
                                         </Storyboard>
@@ -94,19 +97,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Page.Resources>
 
     <Grid Background="White">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -131,15 +124,24 @@
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateMobile">
-                    <VisualState.Setters>
-                        <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
-                    </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <trigger:DeviceTrigger MobileDevice ="True"/>
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="commandBar.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
 
         <RelativePanel x:Name="RelPan_Menu_Logo" Grid.ColumnSpan="2">
             <Image x:Name="Img_Menu" Margin="0" Source="../Images/menu.png" Stretch="Uniform"/>
@@ -147,8 +149,8 @@
 
         <ScrollViewer x:Name="List_Menu" Grid.Row="1" Grid.ColumnSpan="2" FontSize="24" VerticalScrollBarVisibility="Auto" >
             <StackPanel Padding="0,0,0,20">
-                
-                <ToggleButton Name="ToggleBtn_GestionMatch" Background="#FFE76228" Foreground="White" Height="80" FontSize="24" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Style="{StaticResource ToggleButtonMyStyle}">
+
+                <ToggleButton Name="ToggleBtn_GestionMatch" Background="#FFE76228" Foreground="White" Height="80" FontSize="24" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Style="{StaticResource ToggleButton_GestionMatch}">
                     <RelativePanel Margin="20,0" VerticalAlignment="Center">
                         <TextBlock x:Name="Text_GestionMatch" x:Uid="Text_GestionMatch"/>
                         <TextBlock x:Name="Symbol_GestionMatch" Text=">" RenderTransformOrigin="0.5,0.5" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
@@ -159,50 +161,33 @@
                     </RelativePanel>
                 </ToggleButton>
 
-                <Button Background="White" Foreground="Black" FontSize="24" Height="60" Command="{Binding GoAjout}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Visibility="{Binding Path=IsChecked, ElementName=ToggleBtn_GestionMatch, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Button Background="White" Foreground="Black" FontSize="24" Height="60" Command="{Binding GoAddMatch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Visibility="{Binding Path=IsChecked, ElementName=ToggleBtn_GestionMatch, Converter={StaticResource BoolToVisibilityConverter}}">
                     <RelativePanel Margin="20,0" VerticalAlignment="Center">
                         <TextBlock x:Uid="Text_NouvMatch" />
                     </RelativePanel>
                 </Button>
 
-                <Button Background="White" Foreground="Black" FontSize="24" Height="60" Command="{Binding GoSuppression}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Visibility="{Binding Path=IsChecked, ElementName=ToggleBtn_GestionMatch, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Button Background="White" Foreground="Black" FontSize="24" Height="60" Command="{Binding GoDeleteMatch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Visibility="{Binding Path=IsChecked, ElementName=ToggleBtn_GestionMatch, Converter={StaticResource BoolToVisibilityConverter}}">
                     <RelativePanel Margin="20,0" VerticalAlignment="Center">
                         <TextBlock x:Uid="Text_SuppMatch" />
                     </RelativePanel>
                 </Button>
 
-                <Button Background="#FF3286C0" Foreground="White" FontSize="24" Height="80" Command="{Binding GoRecherche}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Button Background="#FF3286C0" Foreground="White" FontSize="24" Height="80" Command="{Binding GoSearch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <RelativePanel Margin="20,0" VerticalAlignment="Center">
-                        <TextBlock x:Uid="Text_Recherche" Foreground="White" FontSize="24" />
+                        <TextBlock x:Uid="Text_Recherche" Foreground="White"  />
                     </RelativePanel>
                 </Button>
 
-                <ToggleButton Name="ToggleBtn_Totaux" Background="#FFE76228" Foreground="White" Height="80" FontSize="24" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Style="{StaticResource ToggleButtonMyStyle}">
+                <Button Background="#FFE76228" Foreground="White" FontSize="24" Height="80" Command="{Binding GoTotals}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <RelativePanel Margin="20,0" VerticalAlignment="Center">
-                        <TextBlock x:Name="Text_Totaux" x:Uid="Text_Totaux"/>
-                        <TextBlock x:Name="Symbol_Totaux" Text=">" RenderTransformOrigin="0.5,0.5" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
-                            <TextBlock.RenderTransform>
-                                <CompositeTransform Rotation="90"/>
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                    </RelativePanel>
-                </ToggleButton>
-
-                <Button Background="White" Foreground="Black" FontSize="24" Height="60" Command="{Binding GoKilometre}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Visibility="{Binding Path=IsChecked, ElementName=ToggleBtn_Totaux, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <RelativePanel Margin="20,0" VerticalAlignment="Center">
-                        <TextBlock x:Uid="Text_Kilometre" />
-                    </RelativePanel>
-                </Button>
-
-                <Button Background="White" Foreground="Black" FontSize="24" Height="60" Command="{Binding GoSalaire}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Visibility="{Binding Path=IsChecked, ElementName=ToggleBtn_Totaux, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <RelativePanel Margin="20,0" VerticalAlignment="Center">
-                        <TextBlock x:Uid="Text_Salaire" />
+                        <TextBlock x:Uid="Text_Totaux" Foreground="White"/>
                     </RelativePanel>
                 </Button>
 
                 <Button Background="#FF3286C0" Foreground="White" FontSize="24" Height="80" Command="{Binding GoDeconnection}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <RelativePanel Margin="20,0" VerticalAlignment="Center">
-                        <TextBlock x:Uid="Text_Deconnection" Foreground="White" FontSize="24" />
+                        <TextBlock x:Uid="Text_Deconnection" Foreground="White" />
                     </RelativePanel>
                 </Button>
 
@@ -210,9 +195,11 @@
         </ScrollViewer>
 
     </Grid>
+
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar x:Name="commandBar">
             <AppBarButton Icon="Orientation" Click="ChangeOrientation"/>
         </CommandBar>
     </Page.BottomAppBar>
+
 </Page>

@@ -26,36 +26,59 @@ namespace DolphinApp.ViewModel
 
         public Utilisateur User { get; set; }
 
-        private ICommand _goAjout;
-        public ICommand GoAjout
+        public void OnNavigateTo(NavigationEventArgs e)
+        {
+            User = e.Parameter as Utilisateur;
+        }
+
+        private void NavToPage(string page)
+        {
+            _navigationService.NavigateTo(page, User);
+        }
+
+        private ICommand _goAddMatch;
+        public ICommand GoAddMatch
         {
             get
             {
-                if (_goAjout == null)
-                    _goAjout = new RelayCommand(() => NavToAjoutPage());
-                return _goAjout;
+                if (_goAddMatch == null)
+                    _goAddMatch = new RelayCommand(() => NavToPage("AddMatchPage"));
+                return _goAddMatch;
             }
         }
 
-        private void NavToAjoutPage()
-        {
-            _navigationService.NavigateTo("AjoutPage", User);
-        }
 
-        private ICommand _goRecherche;
-        public ICommand GoRecherche
+        private ICommand _goDeleteMatch;
+        public ICommand GoDeleteMatch
         {
             get
             {
-                if (_goRecherche == null)
-                    _goRecherche = new RelayCommand(() => NavToRecherchePage());
-                return _goRecherche;
+                if (_goDeleteMatch == null)
+                    _goDeleteMatch = new RelayCommand(() => NavToPage("DeleteMatchPage"));
+                return _goDeleteMatch;
             }
         }
 
-        private void NavToRecherchePage()
+        private ICommand _goSearch;
+        public ICommand GoSearch
         {
-            _navigationService.NavigateTo("RecherchePage", User);
+            get
+            {
+                if (_goSearch == null)
+                    _goSearch = new RelayCommand(() => NavToPage("RecherchePage"));
+                return _goSearch;
+            }
+        }
+
+        private ICommand _goTotals;
+        public ICommand GoTotals
+        {
+            get
+            {
+                if (_goTotals == null)
+                    _goTotals = new RelayCommand(() => NavToPage("TotalsPage"));
+                return _goTotals;
+            }
         }
 
         private ICommand _goDeconnection;
@@ -68,7 +91,6 @@ namespace DolphinApp.ViewModel
                 return _goDeconnection;
             }
         }
-
         private void Deconnection()
         {
             var appData = Windows.Storage.ApplicationData.Current;
@@ -76,9 +98,5 @@ namespace DolphinApp.ViewModel
             _navigationService.NavigateTo("MainPage");
         }
 
-        public void OnNavigateTo(NavigationEventArgs e)
-        {
-            User = e.Parameter as Utilisateur;
-        }
     }
 }

@@ -135,5 +135,22 @@ namespace DolphinApp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        #region ChangeOrientation
+        //Forcing Phone 4"
+        int x = 320; int y = 569;
+
+        //Forcing Phone 5"
+        //int x = 360; int y = 640;
+        private void ChangeOrientation(object sender, RoutedEventArgs e)
+        {
+            var view = ApplicationView.GetForCurrentView();
+            if (view.Orientation.Equals(ApplicationViewOrientation.Landscape))
+                view.TryResizeView(new Size { Width = x, Height = y });
+            else
+                view.TryResizeView(new Size { Width = y, Height = x });
+        }
+        #endregion ChangeOrientation
+
     }
 }

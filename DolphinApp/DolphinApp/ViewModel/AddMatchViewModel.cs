@@ -1,13 +1,12 @@
-﻿using DolphinApp.Model;
+﻿using DolphinApp.DataAccess;
+using DolphinApp.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -16,42 +15,24 @@ using System.Windows.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace DolphinApp.ViewModel
-{ 
-    public class AjoutViewModel : ViewModelBase, INotifyPropertyChanged
+{
+    public class AddMatchViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private static int ALLER_RETOUR = 2;
-        private static decimal PRIX_AU_KM = 0.3456M;
 
-        public event EventHandler Msg_ErreurChargementListes;
-        public event EventHandler Msg_ErreurValidMatch;
-        public event EventHandler Msg_ErreurDate;
+        private IAccessApi ApiAccess { get; set; }
 
         private INavigationService _navigationService;
-
-        public AjoutViewModel(INavigationService navigationService)
+        public AddMatchViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+            ApiAccess = new AccessApi();
             Chargement = true;
             Today = new DateTimeOffset(DateTime.Today);
             DateMatch = Today;
         }
 
-        public Utilisateur User { get; set; }
-
-        public DateTimeOffset Today { get; set; }
-
-        private DateTimeOffset _dateMatch;
-        public DateTimeOffset DateMatch
-        {
-            get { return _dateMatch; }
-            set
-            {
-                if (value < Today) Msg_ErreurDate(this, new EventArgs());
-                _dateMatch = value;
-            }
-        }
-
-        public bool SecondMatch { get; set; }
+        private static int ALLER_RETOUR = 2;
+        private static decimal PRIX_AU_KM = 0.3456M;
 
         private bool _chargement;
         public bool Chargement
@@ -64,6 +45,8 @@ namespace DolphinApp.ViewModel
             }
         }
 
+        public bool SecondMatch { get; set; }
+
         private IEnumerable<Division> _listeDivision;
         public IEnumerable<Division> ListeDivision
         {
@@ -72,6 +55,17 @@ namespace DolphinApp.ViewModel
             {
                 _listeDivision = value;
                 RaisePropertyChanged("ListeDivision");
+            }
+        }
+
+        private Division _divisionSelected;
+        public Division DivisionSelected
+        {
+            get { return _divisionSelected; }
+            set
+            {
+                _divisionSelected = value;
+                RaisePropertyChanged("DivisionSelected");
             }
         }
 
@@ -97,29 +91,24 @@ namespace DolphinApp.ViewModel
             }
         }
 
-        private Division _divisionSelected;
-        public Division DivisionSelected
+        private DateTimeOffset _dateMatch;
+        public DateTimeOffset DateMatch
         {
-            get { return _divisionSelected; }
+            get { return _dateMatch; }
             set
             {
-                _divisionSelected = value;
-                RaisePropertyChanged("DivisionSelected");
+                if (value < Today) Msg_ErreurDate(this, new EventArgs());
+                _dateMatch = value;
             }
         }
 
-        private ICommand _validMatch;
-        public ICommand ValidMatch
-        {
-            get
-            {
-                if (_validMatch == null)
-                {
-                    _validMatch = new RelayCommand(() => IsValidMatch());
-                }
-                return _validMatch;
-            }
-        }
+        public event EventHandler Msg_ErreurChargementListes;
+        public event EventHandler Msg_ErreurValidMatch;
+        public event EventHandler Msg_ErreurDate;
+
+        public DateTimeOffset Today { get; set; }
+
+        public Utilisateur User { get; set; }
 
         public async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -139,6 +128,15 @@ namespace DolphinApp.ViewModel
             }
         }
 
+        private async Task GetDivisionsAsync()
+        {
+            try
+            {
+                ListeDivision = await ApiAccess.GetListDivisionAsync();
+            }
+            catch { throw; }
+        }
+
         private async Task GetPiscinesAsync()
         {
             try
@@ -155,20 +153,17 @@ namespace DolphinApp.ViewModel
             catch { throw; }
         }
 
-        private async Task GetDivisionsAsync()
+        private ICommand _validMatch;
+        public ICommand ValidMatch
         {
-            try
+            get
             {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync("http://dolphinapp.azurewebsites.net/api/division");
-                if (response.IsSuccessStatusCode)
+                if (_validMatch == null)
                 {
-                    String json = await response.Content.ReadAsStringAsync();
-                    ListeDivision = Newtonsoft.Json.JsonConvert.DeserializeObject<Division[]>(json);
+                    _validMatch = new RelayCommand(() => IsValidMatch());
                 }
-                else { throw new Exception(); }
+                return _validMatch;
             }
-            catch { throw; }
         }
 
         public async void IsValidMatch()
@@ -212,25 +207,26 @@ namespace DolphinApp.ViewModel
             catch { throw; }
         }
 
-        private async Task AddMatch(Match newMatch)
+        private async Task<decimal> calculDistance()
         {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(newMatch);
-
-            HttpClient client = new HttpClient();
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync("http://dolphinapp.azurewebsites.net/api/match", content);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            try
             {
-                newMatch.DIVISION = DivisionSelected;
-                newMatch.PISCINE = PiscineSelected;
-                Chargement = false;
-                var parameters = new List<Object>();
-                parameters.Add(User);
-                parameters.Add(newMatch);
-                _navigationService.NavigateTo("ResultAddPage", parameters);
+                var url = new Uri("http://maps.google.com/maps/api/directions/json?origin=" + User.ADR_LATITUDE + "," + User.ADR_LONGITUDE + "&destination=" + PiscineSelected.ADR_LATITUDE + "," + PiscineSelected.ADR_LONGITUDE);
+
+                HttpClient client = new HttpClient();
+                var json = await client.GetStringAsync(url);
+                var response = JObject.Parse(json);
+                var status = (string)response.SelectToken("status");
+
+                if (status.Equals("OK"))
+                {
+                    var distance = (double)response.SelectToken("routes").First.SelectToken("legs").First.SelectToken("distance").SelectToken("value");
+                    distance = distance / 1000;
+                    return (decimal)distance;
+                }
+                else { throw new Exception(); }
             }
-            else { throw new Exception(); }
+            catch { throw; }
         }
 
         private decimal calculCout(Match match)
@@ -257,26 +253,26 @@ namespace DolphinApp.ViewModel
             return cout;
         }
 
-        private async Task<decimal> calculDistance()
+        private async Task AddMatch(Match newMatch)
         {
-            try
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(newMatch);
+
+            HttpClient client = new HttpClient();
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync("http://dolphinapp.azurewebsites.net/api/match", content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                var url = new Uri("http://maps.google.com/maps/api/directions/json?origin=" + User.ADR_LATITUDE + "," + User.ADR_LONGITUDE + "&destination=" + PiscineSelected.ADR_LATITUDE + "," + PiscineSelected.ADR_LONGITUDE);
-
-                HttpClient client = new HttpClient();
-                var json = await client.GetStringAsync(url);
-                var response = JObject.Parse(json);
-                var status = (string)response.SelectToken("status");
-
-                if (status.Equals("OK"))
-                {
-                    var distance = (double)response.SelectToken("routes").First.SelectToken("legs").First.SelectToken("distance").SelectToken("value");
-                    distance = distance / 1000;
-                    return (decimal)distance;
-                }
-                else { throw new Exception(); }
+                newMatch.DIVISION = DivisionSelected;
+                newMatch.PISCINE = PiscineSelected;
+                Chargement = false;
+                var parameters = new List<Object>();
+                parameters.Add(User);
+                parameters.Add(newMatch);
+                _navigationService.NavigateTo("ResultAddPage", parameters);
             }
-            catch { throw; }
+            else { throw new Exception(); }
         }
+
     }
 }

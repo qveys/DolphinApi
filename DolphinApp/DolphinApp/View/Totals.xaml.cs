@@ -23,9 +23,9 @@ namespace DolphinApp.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Recherche : Page
+    public sealed partial class Totals : Page
     {
-        public Recherche()
+        public Totals()
         {
             this.InitializeComponent();
         }
@@ -49,34 +49,18 @@ namespace DolphinApp.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var viewModel = ((RechercheViewModel)DataContext);
-            viewModel.Msg_StartDateAfterEndDate += Msg_StartDateAfterEndDate;
-            viewModel.Msg_EndDateBeforeStartDate += Msg_EndDateBeforeStartDate;
-            viewModel.Msg_NoResultSearch += Msg_NoResultSearch;
+            var viewModel = ((TotalsViewModel)DataContext);
             viewModel.Msg_ErreurInternet += Msg_ErreurInternet;
+            viewModel.Msg_NoResultSearch += Msg_NoResultSearch;
             viewModel.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            var viewModel = ((RechercheViewModel)DataContext);
-            viewModel.Msg_StartDateAfterEndDate -= Msg_StartDateAfterEndDate;
-            viewModel.Msg_EndDateBeforeStartDate -= Msg_EndDateBeforeStartDate;
-            viewModel.Msg_NoResultSearch -= Msg_NoResultSearch;
+            var viewModel = ((TotalsViewModel)DataContext);
             viewModel.Msg_ErreurInternet -= Msg_ErreurInternet;
-        }
-
-        private async void Msg_EndDateBeforeStartDate(object sender, EventArgs e)
-        {
-            MessageDialog msgDialog = new MessageDialog("La date de fin de la recherche doit être situé après la date de début", "Oooops...");
-            await msgDialog.ShowAsync();
-        }
-
-        private async void Msg_StartDateAfterEndDate(object sender, EventArgs e)
-        {
-            MessageDialog msgDialog = new MessageDialog("La date de début de la recherche doit être situé avant la date de fin", "Oooops...");
-            await msgDialog.ShowAsync();
+            viewModel.Msg_NoResultSearch -= Msg_NoResultSearch;
         }
 
         private async void Msg_NoResultSearch(object sender, EventArgs e)
