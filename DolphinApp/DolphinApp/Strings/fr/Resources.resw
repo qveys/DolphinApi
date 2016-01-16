@@ -141,6 +141,9 @@
   <data name="CheckBox_SaveConnection.Content" xml:space="preserve">
     <value>Se souvenir de moi</value>
   </data>
+  <data name="ErrorInternet" xml:space="preserve">
+    <value>Vérifier votre connection internet!</value>
+  </data>
   <data name="PasswordBox_UserPassword.PlaceholderText" xml:space="preserve">
     <value>Mot de Passe</value>
   </data>

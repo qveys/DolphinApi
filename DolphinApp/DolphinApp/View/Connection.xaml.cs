@@ -72,7 +72,8 @@ namespace DolphinApp.View
 
         private async void Msg_ErreurInternet(object sender, EventArgs e)
         {
-            MessageDialog msgDialog = new MessageDialog("Vérifier votre connection internet!", "Oooops...");
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            MessageDialog msgDialog = new MessageDialog(loader.GetString("ErrorInternet"), "Oooops...");
             await msgDialog.ShowAsync();
         }
 
